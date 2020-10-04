@@ -227,7 +227,6 @@ inline std::ostream& operator << (std::ostream& rOStream,
 
 namespace Internals
 {
-
     template <typename TBaseCategoryType>
     class RegisteredPrototypeBase {
       public:
