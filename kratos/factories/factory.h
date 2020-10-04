@@ -225,6 +225,36 @@ inline std::ostream& operator << (std::ostream& rOStream,
     return rOStream;
 }
 
+namespace Internals
+{
+
+    template <typename TBaseCategoryType>
+    class RegisteredPrototypeBase {
+      public:
+        RegisteredPrototypeBase() = default;
+    };
+
+    template <typename TClassType, typename TBaseCategoryType>
+    class RegisteredPrototype : public  RegisteredPrototypeBase<TBaseCategoryType> {
+        typename TClassType::Pointer mpPrototype;
+    public:
+          explicit RegisteredPrototype(const std::string& rName)
+        {
+            mpPrototype = typename TClassType::Pointer(new TClassType); // make_shared cannot access the private class constructor
+            KratosComponents<TBaseCategoryType>::Add(rName, *mpPrototype);
+            Serializer::Register(rName, mpPrototype);
+        }
+
+        template <typename... TArgumentsType >
+        explicit RegisteredPrototype(const std::string& rName, TArgumentsType ... TheseArguments)
+        {
+            mpPrototype = Kratos::make_shared<TClassType>(std::forward<TArgumentsType>(TheseArguments)...);
+            KratosComponents<TBaseCategoryType>::Add(rName, *mpPrototype);
+            Serializer::Register(rName, mpPrototype);
+        }
+    };
+}
+
 ///@}
 
 }  // namespace Kratos.
