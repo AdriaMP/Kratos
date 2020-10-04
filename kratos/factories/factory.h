@@ -237,7 +237,7 @@ namespace Internals
     class RegisteredPrototype : public  RegisteredPrototypeBase<TBaseCategoryType> {
         typename TClassType::Pointer mpPrototype;
     public:
-          explicit RegisteredPrototype(const std::string& rName)
+        explicit RegisteredPrototype(const std::string& rName)
         {
             mpPrototype = typename TClassType::Pointer(new TClassType); // make_shared cannot access the private class constructor
             KratosComponents<TBaseCategoryType>::Add(rName, *mpPrototype);
