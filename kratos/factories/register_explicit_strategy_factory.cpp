@@ -30,12 +30,11 @@ void RegisterExplicitStrategiesFactories()
     typedef TUblasSparseSpace<double> SpaceType;
     typedef TUblasDenseSpace<double> LocalSpaceType;
 
+    typedef ExplicitSolvingStrategy<SpaceType,  LocalSpaceType> ExplicitSolvingStrategyType;
     typedef ExplicitSolvingStrategyRungeKutta4<SpaceType,  LocalSpaceType> ExplicitSolvingStrategyRungeKutta4Type;
 
-    //NOTE: here we must create persisting objects for the strategies
-    static ExplicitSolvingStrategyRungeKutta4Type msExplicitSolvingStrategyRungeKutta4;
-
-    // Registration of explicit strategies
-    KRATOS_REGISTER_EXPLICIT_STRATEGY(ExplicitSolvingStrategyRungeKutta4Type::Name(), msExplicitSolvingStrategyRungeKutta4);
+    static std::vector<Internals::RegisteredPrototypeBase<ExplicitSolvingStrategyType>> msPrototypesExplicitSolvingStrategy{
+      Internals::RegisteredPrototype<ExplicitSolvingStrategyRungeKutta4Type,ExplicitSolvingStrategyType>(ExplicitSolvingStrategyRungeKutta4Type::Name())
+    };
 };
 } // Namespace Kratos

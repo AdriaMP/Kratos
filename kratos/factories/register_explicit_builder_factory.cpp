@@ -31,11 +31,9 @@ void RegisterExplicitBuildersFactories()
 
     typedef ExplicitBuilder<SpaceType,  LocalSpaceType> ExplicitBuilderType;
 
-    //NOTE: here we must create persisting objects for the builder and solvers
-    static ExplicitBuilderType msExplicitBuilder;
-
-    // Registration of builder and solvers
-    KRATOS_REGISTER_EXPLICIT_BUILDER(ExplicitBuilderType::Name(), msExplicitBuilder);
+    static std::vector<Internals::RegisteredPrototypeBase<ExplicitBuilderType>> msPrototypesExplicitBuilder{
+        Internals::RegisteredPrototype<ExplicitBuilderType,ExplicitBuilderType>(ExplicitBuilderType::Name())
+    };
 };
 } // Namespace Kratos
 
